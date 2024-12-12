@@ -1,20 +1,18 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import fetchData from "../utils/fetchData.js";
 // Import der fetchData-Funktion
 
-
 const MealFetcher = () => {
-  const [meals, setMeals] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const data = await fetchData(
-          "https://www.themealdb.com/api/json/v1/1/search.php?s="
-        ); // API-Daten abrufen
-        setMeals(data.meals); // Daten speichern
+        const data = await fetchData("categories.php");
+        console.log(data); // API-Daten abrufen
+        setCategories(data.categories); // Daten speichern
       } catch (err) {
         setError(err.message); // Fehler speichern
       } finally {
@@ -31,13 +29,14 @@ const MealFetcher = () => {
   return (
     <div>
       <h1>Gerichte</h1>
+      {/* <p>{JSON.stringify(typeof categories)}</p> */}
       <ul>
-        {meals.map((meal) => (
-          <li key={meal.idMeal}>
-            <h2>{meal.strMeal}</h2>
+        {categories.map((category) => (
+          <li key={category.idCategory}>
+            <h2>{category.strCategory}</h2>
             <img
-              src={meal.strMealThumb}
-              alt={meal.strMeal}
+              src={category.strCategoryThumb}
+              alt={category.strCategory}
               width="200"
               style={{ borderRadius: "8px" }}
             />

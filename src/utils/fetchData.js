@@ -1,18 +1,22 @@
-const fetchData = async (url) => {
-    try {
-      const response = await fetch(url);
-  
-      if (!response.ok) {
-        throw new Error(`Fehler beim Abrufen der Daten: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      return data; // Daten zurückgeben
-    } catch (error) {
-      console.error("Fehler in fetchData:", error.message);
-      throw error; // Fehler weitergeben
-    }
-  };
-  
-  export default fetchData;
-  
+const apiUrl = "https://www.themealdb.com/api/json/v1/1";
+
+const fetchData = async (endpoint) => {
+  if (!endpoint && typeof endpoint !== "string") {
+    throw new Error("a valid endpoint must be provided");
+  }
+  try {
+    return fetch(`${apiUrl}/${endpoint}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data)
+        return data;
+    
+      });
+      
+  } catch (e) {
+    console.error(e);
+    throw new Error(e);
+  }
+};
+
+export default fetchData
